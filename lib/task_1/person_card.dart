@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'person.dart';
 
-class StudentCard extends StatelessWidget {
-  const StudentCard({super.key, required this.person});
+class PersonCard extends StatelessWidget {
+  const PersonCard({super.key, required this.person});
 
   final Person person;
 

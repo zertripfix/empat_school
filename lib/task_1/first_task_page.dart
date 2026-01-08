@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'person.dart';
-import 'student_card.dart';
+import 'person_card.dart';
 
 class FirstTaskPage extends StatefulWidget {
   const FirstTaskPage({super.key, required this.title});
@@ -80,7 +80,7 @@ class _FirstTaskPageState extends State<FirstTaskPage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Center(child: StudentCard(person: person)),
+      body: Center(child: PersonCard(person: person)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           _showEditDialog(context);
