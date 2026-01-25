@@ -23,7 +23,7 @@ class PersonCard extends StatelessWidget {
               backgroundColor: Color.fromRGBO(172, 214, 184, 1),
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('lib/lab_1/avatar.jpg'),
+                backgroundImage: AssetImage('assets/images/avatar.jpg'),
               ),
             ),
             Text(

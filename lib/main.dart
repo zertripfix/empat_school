@@ -1,5 +1,4 @@
-import 'package:empat_school/task_1/first_task_page.dart';
-
+import 'package:empat_school/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,8 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Color.fromRGBO(172, 214, 184, 1)),
       ),
-      home: const FirstTaskPage(title: 'Task 1'),
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
     );
   }
 }
-

@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'person.dart';
 import 'person_card.dart';
 
-class FirstTaskPage extends StatefulWidget {
-  const FirstTaskPage({super.key, required this.title});
-
-  final String title;
+class FirstTaskScreen extends StatefulWidget {
+  const FirstTaskScreen({super.key});
 
   @override
-  State<FirstTaskPage> createState() => _FirstTaskPageState();
+  State<FirstTaskScreen> createState() => _FirstTaskScreenState();
 }
 
-class _FirstTaskPageState extends State<FirstTaskPage> {
+class _FirstTaskScreenState extends State<FirstTaskScreen> {
   Person person = Person('Denis', 'Gazhur');
 
   final _firstNameTextController = TextEditingController();
@@ -77,7 +75,7 @@ class _FirstTaskPageState extends State<FirstTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Task 1"),
         centerTitle: true,
       ),
       body: Center(child: PersonCard(person: person)),
