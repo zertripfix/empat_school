@@ -11,9 +11,6 @@ class DrawerNav extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            // decoration: BoxDecoration(
-            //   color: Colors.blueGrey,
-            // ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,43 +36,34 @@ class DrawerNav extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Your Channel'),
-            onTap: () {
-              // Handle Home navigation
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.download),
             title: Text('Downloads'),
-            onTap: () {
-              // Handle Explore navigation
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.history),
             title: Text('History'),
-            onTap: () {
-              // Handle Library navigation
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.playlist_play),
             title: Text('Your Videos'),
             onTap: () {
-              // Handle Library navigation
             },
           ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () {
-              // Handle Library navigation
             },
           ),
           ListTile(
             leading: Icon(Icons.help_outline),
             title: Text('Help & Feedback'),
             onTap: () {
-              // Handle Library navigation
             },
           ),
         ],
