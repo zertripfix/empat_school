@@ -1,19 +1,24 @@
 import 'package:empat_school/models/task_2/song_item.dart';
+import 'package:empat_school/widgets/task_2/speed_dial_tile.dart';
 import 'package:flutter/material.dart';
 
-class SpeedDialBlock extends StatelessWidget {
+class SpeedDialBlock extends StatefulWidget {
   final List<SongItem> items;
 
-  SpeedDialBlock({
-    super.key,
-    required this.items,
-  });
+  const SpeedDialBlock({super.key, required this.items});
 
+  @override
+  State<SpeedDialBlock> createState() => _SpeedDialBlockState();
+}
+
+class _SpeedDialBlockState extends State<SpeedDialBlock> {
   static const int itemsPerPage = 9;
 
   final PageController _pageController = PageController();
 
-  int get pageCount => (items.length / itemsPerPage).ceil();
+  _SpeedDialBlockState();
+
+  int get pageCount => (widget.items.length / itemsPerPage).ceil();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class SpeedDialBlock extends StatelessWidget {
       spacing: 8,
       children: [
         _header(),
-        _content(),
+        _content(context),
       ],
     );
   }
@@ -69,7 +74,7 @@ class SpeedDialBlock extends StatelessWidget {
     );
   }
 
-  Widget _content() {
+  Widget _content(BuildContext context) {
     return SizedBox(
       height: 3 * 120,
       child: PageView.builder(
@@ -79,15 +84,15 @@ class SpeedDialBlock extends StatelessWidget {
         padEnds: false,
         itemBuilder: (ctx, indexPage) {
           final start = indexPage * itemsPerPage;
-          final end = (start + itemsPerPage).clamp(0, items.length);
-          final pageItems = items.sublist(start, end);
-          return _grid(pageItems);
+          final end = (start + itemsPerPage).clamp(0, widget.items.length);
+          final pageItems = widget.items.sublist(start, end);
+          return _grid(context, pageItems);
         },
       ),
     );
   }
 
-  Widget _grid(List<SongItem> pageItems) {
+  Widget _grid(BuildContext context, List<SongItem> pageItems) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: GridView.builder(
@@ -100,58 +105,7 @@ class SpeedDialBlock extends StatelessWidget {
           childAspectRatio: 1,
         ),
         itemCount: pageItems.length,
-        itemBuilder: (_, index) => _tile(pageItems[index]),
-      ),
-    );
-  }
-
-  Widget _tile(SongItem item) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            item.coverPath,
-            fit: BoxFit.cover,
-          ),
-
-          // Text background at the bottom
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 48,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withAlpha(190),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // Text
-          Positioned(
-            bottom: 8,
-            left: 8,
-            right: 8,
-            child: Text(
-              item.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
+        itemBuilder: (_, index) => SpeedDialTile(song: pageItems[index]),
       ),
     );
   }
