@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 
 class SpeedDialTile extends StatefulWidget {
   final SongItem song;
+  final bool isLiked;
+  final void Function(SongItem song) onLikeToggle;
 
-  const SpeedDialTile({super.key, required this.song});
+  const SpeedDialTile({
+    super.key,
+    required this.song,
+    required this.isLiked,
+    required this.onLikeToggle,
+  });
 
   @override
   State<SpeedDialTile> createState() => _SpeedDialTileState();
@@ -27,7 +34,11 @@ class _SpeedDialTileState extends State<SpeedDialTile> {
         await Navigator.pushNamed(
           context,
           '/song',
-          arguments: widget.song,
+          arguments: {
+            'song': widget.song,
+            'isLiked': widget.isLiked,
+            'onLikeToggle': widget.onLikeToggle,
+          },
         );
         // Whait until hero animation is completed
         await Future.delayed(const Duration(milliseconds: 400));

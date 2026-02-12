@@ -1,3 +1,6 @@
+import 'package:empat_school/mock/mock_data.dart';
+import 'package:empat_school/models/task_2/song_item.dart';
+import 'package:empat_school/widgets/task_2/bottom_nav_bar.dart';
 import 'package:empat_school/widgets/task_2/drawer_nav.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +17,9 @@ class SecondTaskScreen extends StatefulWidget {
 
 class _SecondTaskScreenState extends State<SecondTaskScreen>
     with SingleTickerProviderStateMixin {
+  List<SongItem> allSongs = mockSongs;
+  Set<SongItem> likedSongs = {};
+
   late TabController _tabController;
 
   @override
@@ -28,6 +34,16 @@ class _SecondTaskScreenState extends State<SecondTaskScreen>
     super.dispose();
   }
 
+  void _toggleLike(SongItem song) {
+    setState(() {
+      if (likedSongs.contains(song)) {
+        likedSongs.remove(song);
+      } else {
+        likedSongs.add(song);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -38,38 +54,19 @@ class _SecondTaskScreenState extends State<SecondTaskScreen>
           controller: _tabController,
           physics: NeverScrollableScrollPhysics(),
           children: [
-            HomeScreen(),
+            HomeScreen(
+              allSongs: allSongs,
+              likedSongs: likedSongs,
+              onLikeToggle: _toggleLike,
+            ),
             ExploreScreen(),
-            LibraryScreen(),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _tabController.index,
-          fixedColor: Colors.white,
-          onTap: (index) {
-            setState(() {}); // Rebuild to update the the BottomNavigationBar
-            _tabController.animateTo(index);
-          },
-          selectedIconTheme: IconThemeData(color: Colors.white),
-          unselectedIconTheme: IconThemeData(color: Colors.white54),
-          items: [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_rounded),
-            ),
-            BottomNavigationBarItem(
-              label: 'Explore',
-              icon: Icon(Icons.explore_outlined),
-              activeIcon: Icon(Icons.explore_rounded),
-            ),
-            BottomNavigationBarItem(
-              label: 'Library',
-              icon: Icon(Icons.bookmark_outline),
-              activeIcon: Icon(Icons.bookmark_rounded),
+            LibraryScreen(
+              likedSongs: likedSongs,
+              onLikeToggle: _toggleLike,
             ),
           ],
         ),
+        bottomNavigationBar: BottomNavBar(tabController: _tabController),
         drawer: DrawerNav(),
       ),
     );

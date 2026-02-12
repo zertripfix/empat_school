@@ -21,17 +21,27 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
       onGenerateRoute: (settings) {
+        final args = settings.arguments!;
         switch (settings.name) {
           case '/home':
             return MaterialPageRoute(builder: (_) => const HomeScreen());
           case '/song':
-            final args = settings.arguments as SongItem?;
-            return MaterialPageRoute(
-              builder: (_) => SongScreen(song: args!),
-            );
+            if (args is Map<String, dynamic>) {
+              final song = args['song'] as SongItem;
+              final isLiked = args['isLiked'] as bool;
+              final onLikeToggle = args['onLikeToggle'] as void Function(SongItem);
+              return MaterialPageRoute(
+                builder: (_) => SongScreen(
+                  song: song,
+                  isLiked: isLiked,
+                  onLikeToggle: onLikeToggle,
+                ),
+              );
+            }
           default:
             return MaterialPageRoute(builder: (_) => const HomeScreen());
         }
+        return null;
       },
     );
   }

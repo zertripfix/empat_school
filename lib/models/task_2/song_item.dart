@@ -10,4 +10,12 @@ class SongItem {
     required this.artist,
     required this.coverPath,
   }) : id = ++_idCounter;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SongItem && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

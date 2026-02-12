@@ -1,9 +1,19 @@
+import 'package:empat_school/models/task_2/song_item.dart';
 import 'package:empat_school/widgets/task_2/sliver_content.dart';
 import 'package:empat_school/widgets/task_2/sliver_header.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<SongItem> allSongs;
+  final Set<SongItem> likedSongs;
+  final void Function(SongItem song) onLikeToggle;
+
+  const HomeScreen({
+    super.key,
+    required this.allSongs,
+    required this.likedSongs,
+    required this.onLikeToggle,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,8 +34,12 @@ class _HomeScreenState extends State<HomeScreen>
     return CustomScrollView(
       slivers: [
         SliverHeader(),
-        SliverContent(),
+        SliverContent(
+          allSongs: widget.allSongs,
+          likedSongs: widget.likedSongs,
+          onLikeToggle: widget.onLikeToggle,
+        ),
       ],
     );
-  }    
+  }
 }

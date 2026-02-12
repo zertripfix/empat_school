@@ -1,10 +1,19 @@
-import 'package:empat_school/mock/mock_data.dart';
+import 'package:empat_school/models/task_2/song_item.dart';
 import 'package:empat_school/widgets/task_2/columns_carousel_block.dart';
 import 'package:empat_school/widgets/task_2/speed_dial_block.dart';
 import 'package:flutter/material.dart';
 
 class SliverContent extends StatelessWidget {
-  const SliverContent({super.key});
+  final List<SongItem> allSongs;
+  final Set<SongItem> likedSongs;
+  final void Function(SongItem song) onLikeToggle;
+
+  const SliverContent({
+    super.key,
+    required this.allSongs,
+    required this.likedSongs,
+    required this.onLikeToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +23,16 @@ class SliverContent extends StatelessWidget {
         children: [
           ColumnsCarouselBlock(
             title: 'Quick picks',
-            items: mockSongs,
+            items: allSongs,
           ),
           SpeedDialBlock(
-            items: mockSongs,
+            allSongs: allSongs,
+            likedSongs: likedSongs,
+            onLikeToggle: onLikeToggle,
           ),
           ColumnsCarouselBlock(
             title: 'Covers and remixes',
-            items: mockSongs,
+            items: allSongs,
           ),
         ],
       ),

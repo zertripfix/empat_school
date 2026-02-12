@@ -3,9 +3,16 @@ import 'package:empat_school/widgets/task_2/speed_dial_tile.dart';
 import 'package:flutter/material.dart';
 
 class SpeedDialBlock extends StatefulWidget {
-  final List<SongItem> items;
+  final List<SongItem> allSongs;
+  final Set<SongItem> likedSongs;
+  final void Function(SongItem song) onLikeToggle;
 
-  const SpeedDialBlock({super.key, required this.items});
+  const SpeedDialBlock({
+    super.key,
+    required this.allSongs,
+    required this.likedSongs,
+    required this.onLikeToggle,
+  });
 
   @override
   State<SpeedDialBlock> createState() => _SpeedDialBlockState();
@@ -18,7 +25,13 @@ class _SpeedDialBlockState extends State<SpeedDialBlock> {
 
   _SpeedDialBlockState();
 
-  int get pageCount => (widget.items.length / itemsPerPage).ceil();
+  int get pageCount => (widget.allSongs.length / itemsPerPage).ceil();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +97,8 @@ class _SpeedDialBlockState extends State<SpeedDialBlock> {
         padEnds: false,
         itemBuilder: (ctx, indexPage) {
           final start = indexPage * itemsPerPage;
-          final end = (start + itemsPerPage).clamp(0, widget.items.length);
-          final pageItems = widget.items.sublist(start, end);
+          final end = (start + itemsPerPage).clamp(0, widget.allSongs.length);
+          final pageItems = widget.allSongs.sublist(start, end);
           return _grid(context, pageItems);
         },
       ),
@@ -105,7 +118,11 @@ class _SpeedDialBlockState extends State<SpeedDialBlock> {
           childAspectRatio: 1,
         ),
         itemCount: pageItems.length,
-        itemBuilder: (_, index) => SpeedDialTile(song: pageItems[index]),
+        itemBuilder: (_, index) => SpeedDialTile(
+          song: pageItems[index],
+          isLiked: widget.likedSongs.contains(pageItems[index]),
+          onLikeToggle: widget.onLikeToggle,
+        ),
       ),
     );
   }
